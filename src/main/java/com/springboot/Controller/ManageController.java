@@ -69,7 +69,7 @@ public class ManageController {
             data = manageService.findWheels(name);
         } catch (ParseException e) {
             e.printStackTrace();
-            return  new Result(null,"添加失败",101);
+            return  new Result(null,"添加失败！",101);
         }
         return  new Result(data,"添加成功",100);
     }
