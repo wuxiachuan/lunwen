@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BearingLoadDao">
+    <insert id="addBearingNeckMeasure" parameterType="BearingLoad" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO bearingLoad
+        (
+                wheelId	,
+                axleNeckDiameterLeftA1,
+                axleNeckDiameterLeftA2,
+                axleNeckDiameterLeftA3,
+                axleNeckDiameterLeftB1,
+                axleNeckDiameterLeftB2,
+                axleNeckDiameterLeftB3,
+                axleNeckDiameterRightA1,
+                axleNeckDiameterRightA2,
+                axleNeckDiameterRightA3,
+                axleNeckDiameterRightB1,
+                axleNeckDiameterRightB2,
+                axleNeckDiameterRightB3,
+                neckFootDiameterLeft1,
+                neckFootDiameterLeft2,
+                neckFootDiameterRight1,
+                neckFootDiameterRight2,
+                neckFootRoundnessLeft,
+                neckFootRoundnessRight,
+                axleNeckRoundnessLeftA,
+                axleNeckRoundnessLeftB,
+                axleNeckRoundnessRightA,
+                axleNeckRoundnessRightB,
+                axleNeckDiameterLeftAvgA,
+                axleNeckDiameterLeftAvgB,
+                axleNeckDiameterRightAvgA,
+                axleNeckDiameterRightAvgB,
+                axleNeckDiameterLeftAvg,
+                axleNeckDiameterRightAvg ,
+                neckFootDiameterLeftAvg ,
+                neckFootDiameterRightAvg ,
+                neckMeasureWorker ,
+                isneckMeasureFinish ,
+                neckMeasureFinishTime,
+                axleNeckRoundnessRight,
+                axleNeckRoundnessLeft
+
+        )
+        VALUES
+        (
+                #{	wheelId	},
+                #{	axleNeckDiameterLeftA1	},
+                #{	axleNeckDiameterLeftA2	},
+                #{	axleNeckDiameterLeftA3	},
+                #{	axleNeckDiameterLeftB1	},
+                #{	axleNeckDiameterLeftB2	},
+                #{	axleNeckDiameterLeftB3	},
+                #{	axleNeckDiameterRightA1	},
+                #{	axleNeckDiameterRightA2	},
+                #{	axleNeckDiameterRightA3	},
+                #{	axleNeckDiameterRightB1	},
+                #{	axleNeckDiameterRightB2	},
+                #{	axleNeckDiameterRightB3	},
+                #{	neckFootDiameterLeft1	},
+                #{	neckFootDiameterLeft2	},
+                #{	neckFootDiameterRight1	},
+                #{	neckFootDiameterRight2	},
+                #{	neckFootRoundnessLeft	},
+                #{	neckFootRoundnessRight	},
+                #{	axleNeckRoundnessLeftA 	},
+                #{	axleNeckRoundnessLeftB 	},
+                #{	axleNeckRoundnessRightA 	},
+                #{	axleNeckRoundnessRightB 	},
+                #{	axleNeckDiameterLeftAvgA 	},
+                #{	axleNeckDiameterLeftAvgB 	},
+                #{	axleNeckDiameterRightAvgA 	},
+                #{	axleNeckDiameterRightAvgB 	},
+                #{	axleNeckDiameterLeftAvg  	},
+                #{	axleNeckDiameterRightAvg 	},
+                #{neckFootDiameterLeftAvg} ,
+                #{neckFootDiameterRightAvg},
+                #{neckMeasureWorker},
+                #{isneckMeasureFinish},
+                #{neckMeasureFinishTime},
+                #{axleNeckRoundnessRight},
+                #{axleNeckRoundnessLeft}
+        )
+    </insert>
+    <update id="updateBearingLoad" parameterType="BearingLoad">
+        update bearingLoad set
+                axleNeckDiameterLeftA1	=	#{	axleNeckDiameterLeftA1	},
+                axleNeckDiameterLeftA2	=	#{	axleNeckDiameterLeftA2	},
+                axleNeckDiameterLeftA3	=	#{	axleNeckDiameterLeftA3	},
+                axleNeckDiameterLeftB1	=	#{	axleNeckDiameterLeftB1	},
+                axleNeckDiameterLeftB2	=	#{	axleNeckDiameterLeftB2	},
+                axleNeckDiameterLeftB3	=	#{	axleNeckDiameterLeftB3	},
+                axleNeckDiameterRightA1	=	#{	axleNeckDiameterRightA1	},
+                axleNeckDiameterRightA2	=	#{	axleNeckDiameterRightA2	},
+                axleNeckDiameterRightA3	=	#{	axleNeckDiameterRightA3	},
+                axleNeckDiameterRightB1	=	#{	axleNeckDiameterRightB1	},
+                axleNeckDiameterRightB2	=	#{	axleNeckDiameterRightB2	},
+                axleNeckDiameterRightB3	=	#{	axleNeckDiameterRightB3	},
+                neckFootDiameterLeft1	=	#{	neckFootDiameterLeft1	},
+                neckFootDiameterLeft2	=	#{	neckFootDiameterLeft2	},
+                neckFootDiameterRight1	=	#{	neckFootDiameterRight1	},
+                neckFootDiameterRight2	=	#{	neckFootDiameterRight2	},
+                neckFootRoundnessLeft	=	#{	neckFootRoundnessLeft	},
+                neckFootRoundnessRight	=	#{	neckFootRoundnessRight	},
+                axleTypeLeft	=	#{	axleTypeLeft	},
+                axleTypeRight	=	#{	axleTypeRight	},
+                bearingInnerDiameterLeft	=	#{	bearingInnerDiameterLeft	},
+                bearingInnerDiameterRight	=	#{	bearingInnerDiameterRight	},
+                sealDiameterLeft	=	#{	sealDiameterLeft	},
+                sealDiameterRight	=	#{	sealDiameterRight	},
+                backerInnerDiameterLeft	=	#{	backerInnerDiameterLeft	},
+                backerInnerDiameterRight	=	#{	backerInnerDiameterRight	},
+                backerRoundnessLeft	=	#{	backerRoundnessLeft	},
+                backerRoundnessRight	=	#{	backerRoundnessRight	},
+                fitBearing2NeckLeft	=	#{	fitBearing2NeckLeft	},
+                fitSeal2NeckLeft	=	#{	fitSeal2NeckLeft	},
+                fitSeal2BackerLeft	=	#{	fitSeal2BackerLeft	},
+                fitBearing2NeckRight	=	#{	fitBearing2NeckRight	},
+                fitSeal2NeckRight	=	#{	fitSeal2NeckRight	},
+                fitSeal2BackerRight	=	#{	fitSeal2BackerRight	},
+                maxPressureLeft	=	#{	maxPressureLeft	},
+                maxPressureRight	=	#{	maxPressureRight	},
+                finalPressureLeft	=	#{	finalPressureLeft	},
+                finalPressureRight	=	#{	finalPressureRight	},
+                axleGapLeft	=	#{	axleGapLeft	},
+                axleGapRight	=	#{	axleGapRight	},
+                bearingAssemble1stLeft	=	#{	bearingAssemble1stLeft	},
+                bearingLevelLeft	=	#{	bearingLevelLeft	},
+                bearingmadeInLeft	=	#{	bearingmadeInLeft	},
+                wheelAssemble1st	=	#{	wheelAssemble1st	},
+                axleNumber	=	#{	axleNumber	},
+                bearingAssembleLeft	=	#{	bearingAssembleLeft	},
+                axleMadeDate	=	#{	axleMadeDate	},
+                axleMaterial	=	#{	axleMaterial	},
+                axleMadeIn	=	#{	axleMadeIn	},
+                bearingAssembleInLeft	=	#{	bearingAssembleInLeft	},
+                repairLevelLeft	=	#{	repairLevelLeft	},
+                bearingAssemble1stRight	=	#{	bearingAssemble1stRight	},
+                bearingLevelRight	=	#{	bearingLevelRight	},
+                bearingmadeInRight	=	#{	bearingmadeInRight	},
+                wheelAssemblelast	=	#{	wheelAssemblelast	},
+                wheelAssembleIn	=	#{	wheelAssembleIn	},
+                bearingAssembleRight	=	#{	bearingAssembleRight	},
+                bearingAssembleInRight	=	#{	bearingAssembleInRight	},
+                repairLevelRight	=	#{	repairLevelRight	},
+                sealMarkLeft	=	#{	sealMarkLeft	},
+                sealMarkRight	=	#{	sealMarkRight	},
+                envTemperatureLeft	=	#{	envTemperatureLeft	},
+                envTemperatureRight	=	#{	envTemperatureRight	},
+                temperatureRiseLeft	=	#{	temperatureRiseLeft	},
+                temperatureRiseRight	=	#{	temperatureRiseRight	},
+                highestTempLeft	=	#{	highestTempLeft	},
+                highestTempRight	=	#{	highestTempRight	},
+                matcherLeft	=	#{	matcherLeft	},
+                worker	=	#{	worker	},
+                caperLeft	=	#{	caperLeft	},
+                matcherRight	=	#{	matcherRight	},
+                loaderRight	=	#{	loaderRight	},
+                caperRight	=	#{	caperRight	},
+                foreMan	=	#{	foreMan	},
+                qualityInspector	=	#{	qualityInspector	},
+                Inspector	=	#{	Inspector	},
+                isFinish	=	#{	isFinish	},
+                finishTime	=	#{	finishTime	},
+                axleNeckRoundnessLeftA 	=	#{	axleNeckRoundnessLeftA 	},
+                axleNeckRoundnessLeftB 	=	#{	axleNeckRoundnessLeftB 	},
+                axleNeckRoundnessRightA 	=	#{	axleNeckRoundnessRightA 	},
+                axleNeckRoundnessRightB 	=	#{	axleNeckRoundnessRightB 	},
+                axleNeckDiameterLeftAvgA 	=	#{	axleNeckDiameterLeftAvgA 	},
+                axleNeckDiameterLeftAvgB 	=	#{	axleNeckDiameterLeftAvgB 	},
+                axleNeckDiameterRightAvgA 	=	#{	axleNeckDiameterRightAvgA 	},
+                axleNeckDiameterRightAvgB 	=	#{	axleNeckDiameterRightAvgB 	},
+                axleNeckDiameterLeftAvg  	=	#{	axleNeckDiameterLeftAvg  	},
+                axleNeckDiameterRightAvg 	=	#{	axleNeckDiameterRightAvg 	},
+                repairSaved  =  #{ repairSaved },
+                loaderLeft =  #{loaderLeft},
+                neckFootDiameterLeftAvg = #{neckFootDiameterLeftAvg} ,
+                neckFootDiameterRightAvg = #{neckFootDiameterRightAvg}
+                where wheelId	=	#{	wheelId	}
+    </update>
+    <update id="addBearingLoad" parameterType="BearingLoad">
+        update bearingLoad set
+                axleTypeLeft	=	#{	axleTypeLeft	},
+                axleTypeRight	=	#{	axleTypeRight	},
+                bearingInnerDiameterLeft	=	#{	bearingInnerDiameterLeft	},
+                bearingInnerDiameterRight	=	#{	bearingInnerDiameterRight	},
+                sealDiameterLeft	=	#{	sealDiameterLeft	},
+                sealDiameterRight	=	#{	sealDiameterRight	},
+                backerInnerDiameterLeft	=	#{	backerInnerDiameterLeft	},
+                backerInnerDiameterRight	=	#{	backerInnerDiameterRight	},
+                backerRoundnessLeft	=	#{	backerRoundnessLeft	},
+                backerRoundnessRight	=	#{	backerRoundnessRight	},
+                fitBearing2NeckLeft	=	#{	fitBearing2NeckLeft	},
+                fitSeal2NeckLeft	=	#{	fitSeal2NeckLeft	},
+                fitSeal2BackerLeft	=	#{	fitSeal2BackerLeft	},
+                fitBearing2NeckRight	=	#{	fitBearing2NeckRight	},
+                fitSeal2NeckRight	=	#{	fitSeal2NeckRight	},
+                fitSeal2BackerRight	=	#{	fitSeal2BackerRight	},
+                maxPressureLeft	=	#{	maxPressureLeft	},
+                maxPressureRight	=	#{	maxPressureRight	},
+                finalPressureLeft	=	#{	finalPressureLeft	},
+                finalPressureRight	=	#{	finalPressureRight	},
+                axleGapLeft	=	#{	axleGapLeft	},
+                axleGapRight	=	#{	axleGapRight	},
+
+                worker	=	#{	worker	},
+                matcherLeft	=	#{	matcherLeft	},
+                matcherRight	=	#{	matcherRight	},
+                loaderRight	=	#{	loaderRight	},
+                loaderLeft =  #{loaderLeft},
+                foreMan	=	#{	foreMan	},
+                qualityInspector	=	#{	qualityInspector	},
+                Inspector	=	#{	Inspector	},
+                isFinish	=	#{	isFinish	},
+                finishTime	=	#{	finishTime	},
+                repairSaved  =  #{ repairSaved }
+                where wheelId	=	#{	wheelId	}
+    </update>
+
+    <update id="updateBearingNeckMeasure" parameterType="BearingLoad">
+        update bearingLoad set
+                axleNeckDiameterLeftA1	=	#{	axleNeckDiameterLeftA1	},
+                axleNeckDiameterLeftA2	=	#{	axleNeckDiameterLeftA2	},
+                axleNeckDiameterLeftA3	=	#{	axleNeckDiameterLeftA3	},
+                axleNeckDiameterLeftB1	=	#{	axleNeckDiameterLeftB1	},
+                axleNeckDiameterLeftB2	=	#{	axleNeckDiameterLeftB2	},
+                axleNeckDiameterLeftB3	=	#{	axleNeckDiameterLeftB3	},
+                axleNeckDiameterRightA1	=	#{	axleNeckDiameterRightA1	},
+                axleNeckDiameterRightA2	=	#{	axleNeckDiameterRightA2	},
+                axleNeckDiameterRightA3	=	#{	axleNeckDiameterRightA3	},
+                axleNeckDiameterRightB1	=	#{	axleNeckDiameterRightB1	},
+                axleNeckDiameterRightB2	=	#{	axleNeckDiameterRightB2	},
+                axleNeckDiameterRightB3	=	#{	axleNeckDiameterRightB3	},
+                neckFootDiameterLeft1	=	#{	neckFootDiameterLeft1	},
+                neckFootDiameterLeft2	=	#{	neckFootDiameterLeft2	},
+                neckFootDiameterRight1	=	#{	neckFootDiameterRight1	},
+                neckFootDiameterRight2	=	#{	neckFootDiameterRight2	},
+                neckFootRoundnessLeft	=	#{	neckFootRoundnessLeft	},
+                neckFootRoundnessRight	=	#{	neckFootRoundnessRight	},
+                axleNeckRoundnessLeftA 	=	#{	axleNeckRoundnessLeftA 	},
+                axleNeckRoundnessLeftB 	=	#{	axleNeckRoundnessLeftB 	},
+                axleNeckRoundnessRightA 	=	#{	axleNeckRoundnessRightA 	},
+                axleNeckRoundnessRightB 	=	#{	axleNeckRoundnessRightB 	},
+                axleNeckDiameterLeftAvgA 	=	#{	axleNeckDiameterLeftAvgA 	},
+                axleNeckDiameterLeftAvgB 	=	#{	axleNeckDiameterLeftAvgB 	},
+                axleNeckDiameterRightAvgA 	=	#{	axleNeckDiameterRightAvgA 	},
+                axleNeckDiameterRightAvgB 	=	#{	axleNeckDiameterRightAvgB 	},
+                axleNeckDiameterLeftAvg  	=	#{	axleNeckDiameterLeftAvg  	},
+                axleNeckDiameterRightAvg 	=	#{	axleNeckDiameterRightAvg 	},
+                neckFootDiameterLeftAvg = #{neckFootDiameterLeftAvg} ,
+                neckFootDiameterRightAvg = #{neckFootDiameterRightAvg},
+                neckMeasureWorker = #{neckMeasureWorker},
+                isneckMeasureFinish = #{isneckMeasureFinish},
+                neckMeasureFinishTime = #{neckMeasureFinishTime}
+                where wheelId	=	#{	wheelId	}
+    </update>
+        <select id="findWheelInfoToBearingLoad" resultType="WheelInfo">
+                select * from wheelinfo where isbearingLoadFinish != '-1' and isbearingLoadFinish != '4' and isbearingRepairFinish = '1'
+        </select>
+        <select id="findBearingLoadByWheelId" parameterType="int" resultType="BearingLoad">
+                select * from bearingLoad where wheelId = #{wheelId}
+        </select>
+        <update id="deleteBearingLoadByWheelId" parameterType="int">
+                delete FROM bearingLoad where wheelId = #{wheelId}
+        </update>
+
+        <update id="flushWheelInfoLoadFinish" >
+                UPDATE wheelinfo SET isbearingLoadFinish = '4' where wheelId = #{wheelId}
+        </update>
+        <update id="rollbackWheelInfoLoadFinish" >
+                UPDATE wheelinfo SET isbearingLoadFinish = #{index} where wheelId = #{wheelId}
+        </update>
+
+        <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM bearingLoad WHERE wheelid  = #{wheelId}
+    </select>
+
+        <select id="searchWheelInfoBycondition" parameterType="String" resultType="WheelInfo">
+           SELECT w.* FROM wheelinfo w
+                JOIN bearingLoad r ON w.`WheelId` = r.`wheelId`
+                where w.isbearingLoadFinish != '-1' and w.isbearingRepairFinish = '1'
+                <if test="wheelId != ''">
+                        AND w.wheelId = #{wheelId}
+                </if>
+                <if test="vehicleNumber != ''">
+                        AND w.vehicleNumber = #{vehicleNumber}
+                </if>
+                <if test="axleNumber != ''">
+                        AND  w.axleNumber = #{axleNumber}
+                </if>
+                <if test="takeInDateFrom != null ">
+                        AND w.takeInDate >= #{takeInDateFrom}
+                </if>
+                <if test="takeInDateTo != null ">
+                        AND #{takeInDateTo} >= w.takeInDate
+                </if>
+                <if test="infoTakeFinishTimeFrom != null ">
+                        AND r.finishTime >= #{infoTakeFinishTimeFrom}
+                </if>
+                <if test="infoTakeFinishTimeTo != null ">
+                        AND  #{infoTakeFinishTimeTo} >= r.finishTime
+                </if>
+        </select>
+</mapper>

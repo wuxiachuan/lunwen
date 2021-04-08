@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.WheelRoundDao">
+    <insert id="insertWheelRound" parameterType="WheelRound" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO wheelRounding
+        (
+                wheelId,
+                wheelDiameterLeft,
+                wheelDiameterRight,
+                treadWearLeft,
+                treadWearRight,
+                rimWideLeft,
+                rimWideRight,
+                flangeThickLeft,
+                flangeThickRight,
+                rimThickLeft,
+                rimThickRight,
+                worker,
+                isFinish,
+                finishTime
+        )
+        VALUES
+        (
+                #{	wheelId	},
+                #{	wheelDiameterLeft	},
+                #{	wheelDiameterRight	},
+                #{	treadWearLeft	},
+                #{	treadWearRight	},
+                #{	rimWideLeft	},
+                #{	rimWideRight	},
+                #{	flangeThickLeft	},
+                #{	flangeThickRight	},
+                #{	rimThickLeft	},
+                #{	rimThickRight	},
+                #{	worker	},
+                #{	isFinish	},
+                #{	finishTime	}
+        )
+    </insert>
+    <update id="updateWheelRound" parameterType="WheelRound">
+        update wheelRounding set
+                    wheelId	=	#{	wheelId	},
+                    wheelDiameterLeft	=	#{	wheelDiameterLeft	},
+                    wheelDiameterRight	=	#{	wheelDiameterRight	},
+                    treadWearLeft	=	#{	treadWearLeft	},
+                    treadWearRight	=	#{	treadWearRight	},
+                    rimWideLeft	=	#{	rimWideLeft	},
+                    rimWideRight	=	#{	rimWideRight	},
+                    flangeThickLeft	=	#{	flangeThickLeft	},
+                    flangeThickRight	=	#{	flangeThickRight	},
+                    rimThickLeft	=	#{	rimThickLeft	},
+                    rimThickRight	=	#{	rimThickRight	},
+                    worker	=	#{	worker	},
+                    isFinish	=	#{	isFinish	},
+                    finishTime	=	#{	finishTime	}
+                where wheelId	=	#{	wheelId	}
+    </update>
+    <select id="findWheelInfoToWheelRound" resultType="WheelInfo">
+                SELECT * FROM wheelinfo WHERE isWheelRoundingFinish = '0' and isbearingRepairFinish = '1'
+         </select>
+    <select id="findWheelRoundByWheelId" parameterType="int" resultType="WheelRound">
+                select * from wheelRounding where wheelId = #{wheelId}
+        </select>
+    <update id="deleteWheelRoundByWheelId" parameterType="int">
+                delete FROM wheelRounding where wheelId = #{wheelId}
+    </update>
+
+    <update id="flushWheelInfoWheelRoundFinish" >
+                UPDATE wheelinfo SET isWheelRoundingFinish = '1' where wheelId = #{wheelId}
+        </update>
+    <update id="rollbackWheelInfoWheelRoundFinish" >
+                UPDATE wheelinfo SET isWheelRoundingFinish = '0' where wheelId = #{wheelId}
+        </update>
+
+    <select id="getoriginwheelround"  parameterType="int" resultType="WheelMeasure">
+        SELECT * FROM wheelmeasure WHERE wheelId = #{wheelId}
+    </select>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM wheelrounding WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoByconditionWheelRound" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+         JOIN wheelRounding r ON w.`WheelId` = r.`wheelId`
+         WHERE (w.isWheelRoundingFinish != '-1' and isbearingRepairFinish = '1')
+        <if test="wheelId != ''">
+            AND w.wheelId = #{wheelId}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="axleNumber != ''">
+            AND  w.axleNumber = #{axleNumber}
+        </if>
+        <if test="takeInDateFrom != null ">
+            AND w.takeInDate >= #{takeInDateFrom}
+        </if>
+        <if test="takeInDateTo != null ">
+            AND #{takeInDateTo} >= w.takeInDate
+        </if>
+        <if test="infoTakeFinishTimeFrom != null ">
+            AND r.finishTime >= #{infoTakeFinishTimeFrom}
+        </if>
+        <if test="infoTakeFinishTimeTo != null ">
+            AND  #{infoTakeFinishTimeTo} >= r.finishTime
+        </if>
+    </select>
+</mapper>

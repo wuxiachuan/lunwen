@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BearingRepairDao">
+    <insert id="insertBearingRepair" parameterType="BearingRepair" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO bearingRepair
+        (           wheelId,
+                    bearingTypeLeft,
+                    bearingTypeRight,
+                    bearingBoxType,
+                    bearingAssemble1stLeft,
+                    bearingLevelLeft,
+                    bearingmadeInLeft,
+                    wheelAssemble1st,
+                    axleNumber,
+                    bearingAssembleLeft,
+                    axleMadeDate,
+                    axleMaterial,
+                    axleMadeIn,
+                    bearingAssembleInLeft,
+                    repairLevelLeft,
+                    bearingAssemble1stRight,
+                    bearingLevelRight,
+                    bearingmadeInRight,
+                    wheelAssemblelast,
+                    wheelAssembleIn,
+                    bearingAssembleRight,
+                    bearingAssembleInRight,
+                    repairLevelRight,
+                    closeStateLeft,
+                    axleGapLeft,
+                    appearanceLeft,
+                    uncapReasonLeft,
+                    unloadReasonLeft,
+                    unloadDateLeft,
+                    repairProgressLeft,
+                    worker,
+                    unloaderLeft,
+                    unloaderRight,
+                    isFinish,
+                    finishTime,
+                    closeStateRight,
+                    axleGapRight,
+                    appearanceRight,
+                    uncapReasonRight,
+                    unloadReasonRight,
+                    unloadDateRight,
+                    repairProgressRight
+        )
+        VALUES
+        (           #{wheelId},
+                    #{bearingTypeLeft},
+                    #{bearingTypeRight},
+                    #{bearingBoxType},
+                    #{bearingAssemble1stLeft},
+                    #{bearingLevelLeft},
+                    #{bearingmadeInLeft},
+                    #{wheelAssemble1st},
+                    #{axleNumber},
+                    #{bearingAssembleLeft},
+                    #{axleMadeDate},
+                    #{axleMaterial},
+                    #{axleMadeIn},
+                    #{bearingAssembleInLeft},
+                    #{repairLevelLeft},
+                    #{bearingAssemble1stRight},
+                    #{bearingLevelRight},
+                    #{bearingmadeInRight},
+                    #{wheelAssemblelast},
+                    #{wheelAssembleIn},
+                    #{bearingAssembleRight},
+                    #{bearingAssembleInRight},
+                    #{repairLevelRight},
+                    #{closeStateLeft},
+                    #{axleGapLeft},
+                    #{appearanceLeft},
+                    #{uncapReasonLeft},
+                    #{unloadReasonLeft},
+                    #{unloadDateLeft},
+                    #{repairProgressLeft},
+                    #{worker},
+                    #{unloaderLeft},
+                    #{unloaderRight},
+                    #{isFinish},
+                    #{finishTime},
+                    #{closeStateRight},
+                    #{axleGapRight},
+                    #{appearanceRight},
+                    #{uncapReasonRight},
+                    #{unloadReasonRight},
+                    #{unloadDateRight},
+                    #{repairProgressRight}
+        )
+    </insert>
+    <update id="updateBearingRepair" parameterType="BearingRepair">
+        update bearingRepair set
+                    bearingTypeLeft=#{bearingTypeLeft},
+                    bearingTypeRight=#{bearingTypeRight},
+                    bearingBoxType=#{bearingBoxType},
+                    bearingAssemble1stLeft=#{bearingAssemble1stLeft},
+                    bearingLevelLeft=#{bearingLevelLeft},
+                    bearingmadeInLeft=#{bearingmadeInLeft},
+                    wheelAssemble1st=#{wheelAssemble1st},
+                    axleNumber=#{axleNumber},
+                    bearingAssembleLeft=#{bearingAssembleLeft},
+                    axleMadeDate=#{axleMadeDate},
+                    axleMaterial=#{axleMaterial},
+                    axleMadeIn=#{axleMadeIn},
+                    bearingAssembleInLeft=#{bearingAssembleInLeft},
+                    repairLevelLeft=#{repairLevelLeft},
+                    bearingAssemble1stRight=#{bearingAssemble1stRight},
+                    bearingLevelRight=#{bearingLevelRight},
+                    bearingmadeInRight=#{bearingmadeInRight},
+                    wheelAssemblelast=#{wheelAssemblelast},
+                    wheelAssembleIn=#{wheelAssembleIn},
+                    bearingAssembleRight=#{bearingAssembleRight},
+                    bearingAssembleInRight=#{bearingAssembleInRight},
+                    repairLevelRight=#{repairLevelRight},
+                    closeStateLeft=#{closeStateLeft},
+                    axleGapLeft=#{axleGapLeft},
+                    appearanceLeft=#{appearanceLeft},
+                    uncapReasonLeft=#{uncapReasonLeft},
+                    unloadReasonLeft=#{unloadReasonLeft},
+                    unloadDateLeft=#{unloadDateLeft},
+                    repairProgressLeft=#{repairProgressLeft},
+                    worker=#{worker},
+                    unloaderLeft=#{unloaderLeft},
+                    unloaderRight=#{unloaderRight},
+                    isFinish=#{isFinish},
+                    finishTime=#{finishTime},
+                    closeStateRight=#{closeStateRight},
+                    axleGapRight=#{axleGapRight},
+                    appearanceRight=#{appearanceRight},
+                    uncapReasonRight=#{uncapReasonRight},
+                    unloadReasonRight=#{unloadReasonRight},
+                    unloadDateRight=#{unloadDateRight},
+                    repairProgressRight=#{repairProgressRight}
+                    where wheelId=#{wheelId}
+    </update>
+
+    <update id="updateBearingUnCap" parameterType="BearingUnCap">
+        update bearingRepair set
+                    uncapReasonLeft=#{unCapReasonLeft},
+                    uncapReasonRight=#{unCapReasonRight},
+                    unCapperLeft=#{unCapperLeft},
+                    unCapperRight=#{unCapperRight},
+                    unCapDateLeft=#{unCapDateLeft},
+                    unCapDateRight=#{unCapDateRight}
+                    where wheelId=#{wheelId}
+    </update>
+
+    <update id="flushWheelInfoRepairFinish" parameterType="int">
+        UPDATE wheelinfo SET isbearingRepairFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoRepairFinish" parameterType="int">
+        UPDATE wheelinfo SET isbearingRepairFinish = '0' where wheelId = #{wheelId}
+    </update>
+    <update id="flushWheelInfoLoadFinish" >
+        UPDATE wheelinfo SET isbearingLoadFinish = #{loadindex},
+                                isbearingCapFinishL = #{capindex},
+                                isbearingCapFinish = #{capindex}
+                                where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoLoadFinish" parameterType="int">
+        UPDATE wheelinfo SET isbearingLoadFinish = '-1',isbearingCapFinishL = '-1' where wheelId = #{wheelId}
+    </update>
+
+    <select id="findBearingRepairByWheelId" parameterType="int" resultType="BearingRepair">
+        select * from bearingRepair where wheelId = #{wheelId}
+    </select>
+    <update id="deleteBearingRepairByWheelId" parameterType="int">
+        delete FROM bearingRepair where wheelId = #{wheelId}
+    </update>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM bearingRepair WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoByconditionRepair" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+            JOIN bearingRepair r ON w.`WheelId` = r.`wheelId`
+            where w.isMeasureFinish = '1' and (w.state != '3' or w.state != '4')
+            <if test="wheelId != ''">
+                AND  w.wheelId = #{wheelId}
+            </if>
+            <if test="vehicleNumber != ''">
+                AND w.vehicleNumber = #{vehicleNumber}
+            </if>
+            <if test="axleNumber != ''">
+                AND w.axleNumber = #{axleNumber}
+            </if>
+            <if test="takeInDateFrom != null ">
+                AND w.takeInDate >= #{takeInDateFrom}
+            </if>
+            <if test="takeInDateTo != null ">
+                AND #{takeInDateTo} >= w.takeInDate
+            </if>
+            <if test="infoTakeFinishTimeFrom != null ">
+                AND r.finishTime >= #{infoTakeFinishTimeFrom}
+            </if>
+            <if test="infoTakeFinishTimeTo != null ">
+                AND  #{infoTakeFinishTimeTo} >= r.finishTime
+            </if>
+    </select>
+</mapper>

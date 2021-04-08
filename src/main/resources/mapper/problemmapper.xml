@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.ProblemDao">
+    <insert id="insertProblem" parameterType="Problem" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO problems
+        (
+            id,
+            wheelId,
+            processBelong,
+            problemDescription,
+            problemDetails,
+            worker,
+            problemFinder,
+            findTime,
+            problemStatus,
+            correctTime,
+            confirm,
+            confirmTime
+        )
+        VALUES
+        (
+            #{id},
+            #{wheelId},
+            #{processBelong},
+            #{problemDescription},
+            #{problemDetails},
+            #{worker},
+            #{problemFinder},
+            #{findTime},
+            #{problemStatus},
+            #{correctTime},
+            #{confirm},
+            #{confirmTime}
+        )
+    </insert>
+    <update id="updateProblem" parameterType="Problem">
+        update problems set
+                  wheelId =  #{wheelId},
+                  processBelong =  #{processBelong},
+                  problemDescription =  #{problemDescription},
+                  problemDetails =  #{problemDetails},
+                  worker =  #{worker},
+                  problemFinder =  #{problemFinder},
+                  findTime =  #{findTime},
+                  problemStatus =  #{problemStatus},
+                  correctTime =  #{correctTime},
+                  confirm = #{confirm},
+                  confirmTime =  #{confirmTime}
+                where id	=	#{	id	}
+    </update>
+    <select id="findProblemById" parameterType="int" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        WHERE p.id  =	#{	id	}
+    </select>
+    <select id="findProblemByWheelId" parameterType="int" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        where p.wheelId = #{wheelId}
+    </select>
+    <update id="deleteProblemById" parameterType="int">
+        delete from problems where id	=	#{	id	}
+    </update>
+    <update id="deleteProblemByWheelId" parameterType="int">
+        delete from problems where wheelId = #{wheelId}
+    </update>
+    <update id="resoveProblem" >
+        update problems set problemStatus = '1',correctTime = #{ time } where id = #{id}
+    </update>
+    <update id="finishProblem">
+        update problems set confirm = '1',confirmTime = #{ time } where id = #{id}
+    </update>
+    <select id="findProblemByFinder" parameterType="String" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        where p.problemFinder = #{name}
+    </select>
+    <select id="findProblemByFinderUnFinish" parameterType="String" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        where p.problemFinder = #{name} and p.confirm = '0'
+    </select>
+    <select id="findProblemByworker" parameterType="String" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        where p.worker = #{name} and p.problemStatus = '0'
+    </select>
+    <select id="findProblemByworkerUnFinish" parameterType="String" resultType="Problem">
+        SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+        JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+        where p.worker = #{name} and p.problemStatus = '0'
+    </select>
+    <select id="findProblemByCond" resultType="Problem">
+            SELECT p.*,w.`AxleNumber`,w.`AxleType`,w.`axleMadeIn` FROM problems p
+            JOIN wheelinfo w ON p.`wheelId` = w.`WheelId`
+            <where>
+                <if test="axleNumber != ''">
+                    AND  w.axleNumber = #{axleNumber}
+                </if>
+                <if test="axleType != ''">
+                    AND  w.axleType = #{axleType}
+                </if>
+                <if test="problemFinder != ''">
+                    AND  p.problemFinder = #{problemFinder}
+                </if>
+                <if test="processBelong != ''">
+                    AND  p.processBelong = #{processBelong}
+                </if>
+                <if test="worker != ''">
+                    AND  p.worker = #{worker}
+                </if>
+                <if test="problemStatus != ''">
+                    AND p.problemStatus = #{problemStatus}
+                </if>
+                <if test="confirm != ''">
+                    AND p.confirm = #{confirm}
+                </if>
+                <if test="correctTime != null">
+                    AND p.correctTime like #{correctTime}
+                </if>
+                <if test="findTime != null ">
+                    AND  p.findTime like #{findTime}
+                </if>
+            </where>
+    </select>
+
+</mapper>

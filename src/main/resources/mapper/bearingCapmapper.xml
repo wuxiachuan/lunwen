@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BearingCapDao">
+    <insert id="insertBearingCap" parameterType="BearingCap" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO bearingCap
+        (
+                wheelId	,
+                bearingAssemble1stLeft	,
+                bearingLevelLeft	,
+                bearingmadeInLeft	,
+                wheelAssemble1st	,
+                axleNumber	,
+                bearingAssembleLeft	,
+                axleMadeDate	,
+                axleMaterial	,
+                axleMadeIn	,
+                bearingAssembleInLeft	,
+                repairLevelLeft	,
+                bearingAssemble1stRight	,
+                bearingLevelRight	,
+                bearingmadeInRight	,
+                wheelAssemblelast	,
+                wheelAssembleIn	,
+                bearingAssembleRight	,
+                bearingAssembleInRight	,
+                repairLevelRight	,
+                sealMarkLeft	,
+                sealMarkRight	,
+                envTemperatureLeft	,
+                envTemperatureRight	,
+                temperatureRiseLeft	,
+                temperatureRiseRight	,
+                highestTempLeft	,
+                highestTempRight	,
+                matcherLeft	,
+                loaderLeft	,
+                worker	,
+                matcherRight	,
+                loaderRight	,
+                caperRight	,
+                foreMan	,
+                qualityInspector	,
+                Inspector	,
+                isFinish	,
+                finishTime,
+                repairSaved,
+                boltTorqueLeft1,
+                boltTorqueLeft2,
+                boltTorqueLeft3,
+                boltTorqueRight1,
+                boltTorqueRight2,
+                boltTorqueRight3,
+                boltTorqueLeftAvg,
+                boltTorqueRightAvg
+        )
+        VALUES
+        (
+                #{	wheelId	},
+                #{	bearingAssemble1stLeft	},
+                #{	bearingLevelLeft	},
+                #{	bearingmadeInLeft	},
+                #{	wheelAssemble1st	},
+                #{	axleNumber	},
+                #{	bearingAssembleLeft	},
+                #{	axleMadeDate	},
+                #{	axleMaterial	},
+                #{	axleMadeIn	},
+                #{	bearingAssembleInLeft	},
+                #{	repairLevelLeft	},
+                #{	bearingAssemble1stRight	},
+                #{	bearingLevelRight	},
+                #{	bearingmadeInRight	},
+                #{	wheelAssemblelast	},
+                #{	wheelAssembleIn	},
+                #{	bearingAssembleRight	},
+                #{	bearingAssembleInRight	},
+                #{	repairLevelRight	},
+                #{	sealMarkLeft	},
+                #{	sealMarkRight	},
+                #{	envTemperatureLeft	},
+                #{	envTemperatureRight	},
+                #{	temperatureRiseLeft	},
+                #{	temperatureRiseRight	},
+                #{	highestTempLeft	},
+                #{	highestTempRight	},
+                #{	matcherLeft	},
+                #{	loaderLeft	},
+                #{	worker	},
+                #{	matcherRight	},
+                #{	loaderRight	},
+                #{	caperRight	},
+                #{	foreMan	},
+                #{	qualityInspector	},
+                #{	Inspector	},
+                #{	isFinish	},
+                #{	finishTime	},
+                #{ repairSaved },
+                #{boltTorqueLeft1},
+                #{boltTorqueLeft2},
+                #{boltTorqueLeft3},
+                #{boltTorqueRight1},
+                #{boltTorqueRight2},
+                #{boltTorqueRight3},
+                #{boltTorqueLeftAvg},
+                #{boltTorqueRightAvg}
+        )
+    </insert>
+    <update id="updateBearingCap" parameterType="BearingCap">
+        update bearingCap set
+                bearingAssemble1stLeft	=	#{	bearingAssemble1stLeft	},
+                bearingLevelLeft	=	#{	bearingLevelLeft	},
+                bearingmadeInLeft	=	#{	bearingmadeInLeft	},
+                wheelAssemble1st	=	#{	wheelAssemble1st	},
+                axleNumber	=	#{	axleNumber	},
+                bearingAssembleLeft	=	#{	bearingAssembleLeft	},
+                axleMadeDate	=	#{	axleMadeDate	},
+                axleMaterial	=	#{	axleMaterial	},
+                axleMadeIn	=	#{	axleMadeIn	},
+                bearingAssembleInLeft	=	#{	bearingAssembleInLeft	},
+                repairLevelLeft	=	#{	repairLevelLeft	},
+                bearingAssemble1stRight	=	#{	bearingAssemble1stRight	},
+                bearingLevelRight	=	#{	bearingLevelRight	},
+                bearingmadeInRight	=	#{	bearingmadeInRight	},
+                wheelAssemblelast	=	#{	wheelAssemblelast	},
+                wheelAssembleIn	=	#{	wheelAssembleIn	},
+                bearingAssembleRight	=	#{	bearingAssembleRight	},
+                bearingAssembleInRight	=	#{	bearingAssembleInRight	},
+                repairLevelRight	=	#{	repairLevelRight	},
+                sealMarkLeft	=	#{	sealMarkLeft	},
+                sealMarkRight	=	#{	sealMarkRight	},
+                envTemperatureLeft	=	#{	envTemperatureLeft	},
+                envTemperatureRight	=	#{	envTemperatureRight	},
+                temperatureRiseLeft	=	#{	temperatureRiseLeft	},
+                temperatureRiseRight	=	#{	temperatureRiseRight	},
+                highestTempLeft	=	#{	highestTempLeft	},
+                highestTempRight	=	#{	highestTempRight	},
+                matcherLeft	=	#{	matcherLeft	},
+                loaderLeft	=	#{	loaderLeft	},
+                worker	=	#{	worker	},
+                matcherRight	=	#{	matcherRight	},
+                loaderRight	=	#{	loaderRight	},
+                caperRight	=	#{	caperRight	},
+                foreMan	=	#{	foreMan	},
+                qualityInspector	=	#{	qualityInspector	},
+                Inspector	=	#{	Inspector	},
+                isFinish	=	#{	isFinish	},
+                finishTime	=	#{	finishTime	},
+                repairSaved  =  #{ repairSaved },
+               boltTorqueLeft1 = #{boltTorqueLeft1},
+              boltTorqueLeft2 = #{boltTorqueLeft2},
+              boltTorqueLeft3 = #{boltTorqueLeft3},
+              boltTorqueRight1 = #{boltTorqueRight1},
+              boltTorqueRight2 = #{boltTorqueRight2},
+              boltTorqueRight3 =  #{boltTorqueRight3},
+              boltTorqueLeftAvg = #{boltTorqueLeftAvg},
+              boltTorqueRightAvg = #{boltTorqueRightAvg}
+                where wheelId	=	#{	wheelId	}
+    </update>
+<!--    <select id="findWheelInfoToBearingCap" resultType="WheelInfo">-->
+<!--                select * from wheelinfo where-->
+<!--                 (isbearingCapFinishL = '0' and isbearingLoadFinish = '4' and isbearingCapFinishW = '-1')-->
+<!--                 or ( isbearingCapFinishW = '0' and isWheelRoundingFinish = '1' and isbearingCapFinishL = '-1')-->
+<!--                 or (isbearingCapFinishL = '0' and isbearingLoadFinish = '4' and isbearingCapFinishW = '0' and isWheelRoundingFinish = '1')-->
+<!--                 or ( isbearingCapFinishL = '2' and isbearingCapFinishW = '2' )-->
+<!--        </select>-->
+    <select id="findWheelInfoToBearingCap" resultType="WheelInfo">
+                select * from wheelinfo w where
+                     w.isbearingRepairFinish = '1' and isbearingCapFinish = '0'
+                    and  ((w.isWheelRoundingFinish = '1'  and  w.isbearingLoadFinish = '4')
+                    or (w.isWheelRoundingFinish = '1' and  w.isbearingLoadFinish = '-1')
+                    or (w.isWheelRoundingFinish = '-1' and  w.isbearingLoadFinish = '4'))
+        </select>
+    <select id="findBearingCapByWheelId" parameterType="int" resultType="BearingCap">
+                select * from bearingCap where wheelId = #{wheelId}
+        </select>
+    <update id="deleteBearingCapByWheelId" parameterType="int">
+                delete FROM bearingCap where wheelId = #{wheelId}
+        </update>
+
+    <update id="flushWheelInfoCapFinish" >
+                UPDATE wheelinfo SET isbearingCapFinish = '1',isbearingCapFinishL = '1',isbearingCapFinishW = '1' where wheelId = #{wheelId}
+        </update>
+    <update id="rollbackWheelInfoCapFinish" >
+                UPDATE wheelinfo SET isbearingCapFinish = '0', isbearingCapFinishL = '2',isbearingCapFinishW = '2' where wheelId = #{wheelId}
+        </update>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM bearingCap WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoBycondition" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+            JOIN bearingCap r ON w.`WheelId` = r.`wheelId`
+        where
+            w.isbearingRepairFinish = '1'
+            and  ((w.isWheelRoundingFinish = '1'  and  w.isbearingLoadFinish = '4')
+            or (w.isWheelRoundingFinish = '1' and  w.isbearingLoadFinish = '-1')
+            or (w.isWheelRoundingFinish = '-1' and  w.isbearingLoadFinish = '4'))
+        <if test="wheelId != ''">
+            AND w.wheelId = #{wheelId}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="axleNumber != ''">
+            AND  w.axleNumber = #{axleNumber}
+        </if>
+        <if test="takeInDateFrom != null ">
+            AND w.infoTakeFinishTime >= #{takeInDateFrom}
+        </if>
+        <if test="takeInDateTo != null ">
+            AND #{takeInDateTo} >= w.infoTakeFinishTime
+        </if>
+        <if test="infoTakeFinishTimeFrom != null ">
+            AND r.finishTime >= #{infoTakeFinishTimeFrom}
+        </if>
+        <if test="infoTakeFinishTimeTo != null ">
+            AND  #{infoTakeFinishTimeTo} >= r.finishTime
+        </if>
+    </select>
+</mapper>

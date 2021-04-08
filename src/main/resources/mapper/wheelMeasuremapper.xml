@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.MeasureDao">
+    <insert id="insertWheelMeasure" parameterType="WheelMeasure" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO wheelmeasure
+        (           wheelId,
+                    axleDiameter,
+                    wheelDiameterLeft,
+                    wheelDiameterRight,
+                    treadWearLeft,
+                    treadWearRight,
+                    rimThickLeft,
+                    rimThickRight,
+                    rimWideLeft,
+                    rimWideRight,
+                    flangeThickLeft,
+                    flangeThickRight,
+                    internalDistance1,
+                    internalDistance2,
+                    internalDistance3,
+                    problem,
+                    repairProcess,
+                    worker,
+                    isFinish,
+                    finishTime
+        )
+        VALUES
+        (           #{wheelId},
+                    #{axleDiameter},
+                    #{wheelDiameterLeft},
+                    #{wheelDiameterRight},
+                    #{treadWearLeft},
+                    #{treadWearRight},
+                    #{rimThickLeft},
+                    #{rimThickRight},
+                    #{rimWideLeft},
+                    #{rimWideRight},
+                    #{flangeThickLeft},
+                    #{flangeThickRight},
+                    #{internalDistance1},
+                    #{internalDistance2},
+                    #{internalDistance3},
+                    #{problem},
+                    #{repairProcess},
+                    #{worker},
+                    #{isFinish},
+                    #{finishTime} )
+    </insert>
+    <update id="updateWheelMeasure" parameterType="WheelMeasure">
+        update  wheelmeasure set
+                    axleDiameter=#{axleDiameter},
+                    wheelDiameterLeft=#{wheelDiameterLeft},
+                    wheelDiameterRight=#{wheelDiameterRight},
+                    treadWearLeft=#{treadWearLeft},
+                    treadWearRight=#{treadWearRight},
+                    rimThickLeft=#{rimThickLeft},
+                    rimThickRight=#{rimThickRight},
+                    rimWideLeft=#{rimWideLeft},
+                    rimWideRight=#{rimWideRight},
+                    flangeThickLeft=#{flangeThickLeft},
+                    flangeThickRight=#{flangeThickRight},
+                    internalDistance1=#{internalDistance1},
+                    internalDistance2=#{internalDistance2},
+                    internalDistance3=#{internalDistance3},
+                    problem= #{problem},
+                    repairProcess=#{repairProcess},
+                    worker=#{worker},
+                    isFinish=#{isFinish},
+                    finishTime=#{finishTime}
+                    where wheelId=#{wheelId}
+    </update>
+    <select id="findWheelMeasureByWheelId" parameterType="int" resultType="WheelMeasure">
+        select * from wheelmeasure where wheelId = #{wheelId}
+    </select>
+    <update id="flushWheelInfoMeasureFinish" parameterType="int">
+        UPDATE wheelinfo SET isMeasureFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoMeasureFinish" parameterType="int">
+        UPDATE wheelinfo SET isMeasureFinish = '0' where wheelId = #{wheelId}
+    </update>
+    <update id="flushWheelInfoInspectionFinish" parameterType="int">
+        UPDATE wheelinfo SET isaxleInspectionFinish = '0' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoInspectionFinish" parameterType="int">
+        UPDATE wheelinfo SET isaxleInspectionFinish = '-1' where wheelId = #{wheelId}
+    </update>
+    <update id="flushWheelInfoWheelRounding" parameterType="int">
+        UPDATE wheelinfo SET isWheelRoundingFinish = '0',isbearingCapFinishW = '0',isbearingCapFinish = '0' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoWheelRounding" parameterType="int">
+        UPDATE wheelinfo SET isWheelRoundingFinish = '-1',isbearingCapFinishW = '-1',isbearingCapFinish = '-1' where wheelId = #{wheelId}
+    </update>
+    <update id="flushWheelInfoMagInspectionFinish" parameterType="int">
+        UPDATE wheelinfo SET ismagnetInspectionFinish = '0' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoMagInspectionFinish" parameterType="int">
+        UPDATE wheelinfo SET ismagnetInspectionFinish = '-1' where wheelId = #{wheelId}
+    </update>
+
+    <select id="rollbackWheelInfoRepairFinish" parameterType="int">
+        UPDATE wheelinfo SET isbearingRepairFinish = '0' where wheelId = #{wheelId}
+    </select>
+
+
+
+
+    <update id="deleteWheelMeasure" parameterType="int">
+        DELETE FROM `wheelmeasure` WHERE wheelId = #{wheelId}
+    </update>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM wheelmeasure WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoByconditionMeasure" parameterType="String"  resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+        JOIN wheelmeasure r ON w.`WheelId` = r.`wheelId`
+        <where>
+            <if test="wheelId != ''">
+                AND w.wheelId = #{wheelId}
+            </if>
+            <if test="vehicleNumber != ''">
+                AND w.vehicleNumber = #{vehicleNumber}
+            </if>
+            <if test="axleNumber != ''">
+                AND  w.axleNumber = #{axleNumber}
+            </if>
+            <if test="takeInDateFrom != null ">
+                AND w.takeInDate >= #{takeInDateFrom}
+            </if>
+            <if test="takeInDateTo != null ">
+                AND #{takeInDateTo} >= w.takeInDate
+            </if>
+            <if test="infoTakeFinishTimeFrom != null ">
+                AND r.finishTime >= #{infoTakeFinishTimeFrom}
+            </if>
+            <if test="infoTakeFinishTimeTo != null ">
+                AND  #{infoTakeFinishTimeTo} >= r.finishTime
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.VehicleInfoDao">
+    <insert id="insertVehicleInfo" parameterType="VehicleInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO vehicleInfo
+        (
+            vehicleNumber,
+            vehicleType,
+            RepairDate,
+            axleType,
+            preSessionRepair,
+            SessionRepair,
+            preOverhaul,
+            NextOverhaul,
+            axleIn1,
+            axleIn2,
+            axleIn3,
+            axleIn4,
+            axleOut1,
+            axleOut2,
+            axleOut3,
+            axleOut4,
+            isFinish,
+            finishTime,
+            location,
+            sequence
+        )
+        VALUES
+        (
+            #{	vehicleNumber	},
+            #{	vehicleType	},
+            #{	RepairDate	},
+            #{	axleType	},
+            #{	preSessionRepair	},
+            #{	SessionRepair	},
+            #{	preOverhaul	},
+            #{	NextOverhaul	},
+            #{	axleIn1	},
+            #{	axleIn2	},
+            #{	axleIn3	},
+            #{	axleIn4	},
+            #{	axleOut1	},
+            #{	axleOut2	},
+            #{	axleOut3	},
+            #{	axleOut4	},
+            #{	isFinish	},
+            #{	finishTime	},
+            #{ location     },
+            #{ sequence     }
+        )
+    </insert>
+
+    <update id="updateVehicleInfo" parameterType="VehicleInfo">
+        update vehicleInfo set
+                vehicleNumber	=	#{	vehicleNumber	},
+                vehicleType	=	#{	vehicleType	},
+                RepairDate	=	#{	RepairDate	},
+                axleType	=	#{	axleType	},
+                preSessionRepair	=	#{	preSessionRepair	},
+                SessionRepair	=	#{	SessionRepair	},
+                preOverhaul	=	#{	preOverhaul	},
+                NextOverhaul	=	#{	NextOverhaul	},
+                axleIn1	=	#{	axleIn1	},
+                axleIn2	=	#{	axleIn2	},
+                axleIn3	=	#{	axleIn3	},
+                axleIn4	=	#{	axleIn4	},
+                axleOut1	=	#{	axleOut1	},
+                axleOut2	=	#{	axleOut2	},
+                axleOut3	=	#{	axleOut3	},
+                axleOut4	=	#{	axleOut4	},
+                isFinish	=	#{	isFinish	},
+                finishTime	=	#{	finishTime	},
+                location    =   #{ location     },
+                sequence    =   #{ sequence     }
+                where id=#{id}
+    </update>
+    <select id="findVehicleInfo" parameterType="String" resultType="VehicleInfo">
+        select v.* from vehicleInfo v where v.`vehicleNumber` = #{ vehicleNum }
+    </select>
+    <update id="addAxleIn1" parameterType="String">
+        UPDATE vehicleInfo v SET v.`axleIn1`= #{ axleNum } WHERE v.`vehicleNumber` = #{ vehicleNum }
+    </update>
+    <update id="addAxleIn2" parameterType="String">
+        UPDATE vehicleInfo v SET v.`axleIn2`= #{ axleNum } WHERE v.`vehicleNumber` = #{ vehicleNum }
+    </update>
+    <update id="addAxleIn3" parameterType="String">
+        UPDATE vehicleInfo v SET v.`axleIn3`= #{ axleNum } WHERE v.`vehicleNumber` = #{ vehicleNum }
+    </update>
+    <update id="addAxleIn4" parameterType="String">
+        UPDATE vehicleInfo v SET v.`axleIn4`= #{ axleNum } WHERE v.`vehicleNumber` = #{ vehicleNum }
+    </update>
+
+    <select id="findVehicleInfoByCondition" parameterType="String" resultType="VehicleInfo">
+        SELECT w.* FROM vehicleInfo w
+        WHERE 1=1
+        <if test="Id != ''">
+            AND w.id = #{Id}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="vehicleType != ''">
+            AND w.vehicleType = #{vehicleType}
+        </if>
+        <if test="isFinish != ''">
+            AND w.isFinish = #{isFinish}
+        </if>
+        <if test="RepairDateFrom != null ">
+            AND w.RepairDate >= #{RepairDateFrom}
+        </if>
+        <if test="RepairDateTo != null ">
+            AND #{RepairDateTo} >= w.RepairDate
+        </if>
+        <if test="finishTimeFrom != null ">
+            AND w.finishTime >= #{finishTimeFrom}
+        </if>
+        <if test="finishTimeTo != null ">
+            AND #{finishTimeTo} >= w.finishTime
+        </if>
+    </select>
+
+    <select id="findVehicleToMatch" parameterType="String" resultType="VehicleInfo">
+        SELECT w.* FROM vehicleInfo w
+        WHERE 1=1
+        <if test="Id != ''">
+            AND w.id = #{Id}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="vehicleType != ''">
+            AND w.vehicleType = #{vehicleType}
+        </if>
+        <if test="RepairDate != null ">
+            AND w.RepairDate = #{RepairDate}
+        </if>
+    </select>
+
+    <update id="prepareVehicle" parameterType="String">
+        UPDATE vehicleInfo v SET v.`isFinish`='0' WHERE v.`vehicleNumber`= #{vehicleNum}
+    </update>
+
+    <select id="findVehicleInfoByDate" parameterType="String" resultType="VehicleInfo">
+        select v.* from vehicleInfo v where v.`RepairDate` = #{ RepairDate }
+    </select>
+
+    <select id="findVehicleInfoAll" resultType="VehicleInfo">
+        select * from vehicleInfo
+    </select>
+
+</mapper>

@@ -1,0 +1,1 @@
+create table test(id INT ,username VARCHAR(10));

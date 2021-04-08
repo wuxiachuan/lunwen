@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.UserDao">
+    <resultMap id="user" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="phoneNum" column="phoneNum"/>
+        <result property="status" column="STATUS"/>
+        <result property="isOnline" column="isonLine"/>
+        <collection property="roles" column="id" select="findRoleByUserId"/>
+    </resultMap>
+    <!--    获取修改role-right表-->
+    <resultMap id="role" type="Role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleDesc" column="roleDesc"/>
+        <collection property="rights" column="id" select="findRightByRoleId"/>
+    </resultMap>
+    <!--    获取原始role-right表-->
+    <resultMap id="role2" type="Role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleDesc" column="roleDesc"/>
+        <collection property="rights" column="id" select="findRightByRoleId2"/>
+    </resultMap>
+    <!--    获取修改role-right表-->
+    <resultMap id="role3" type="Role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleDesc" column="roleDesc"/>
+    </resultMap>
+    <!--    获取修改right表-->
+<!--    <resultMap id="right" type="Right">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="permissionName" column="permissionName"/>-->
+<!--        <result property="url" column="url"/>-->
+<!--        <result property="level" column="level"/>-->
+<!--        <collection property="subRight" column="id" select="findSubRightByRightId"/>-->
+<!--    </resultMap>-->
+    <!--    获取原始right表-->
+    <resultMap id="right2" type="Right">
+        <id property="id" column="id"/>
+        <result property="permissionName" column="permissionName"/>
+        <result property="url" column="url"/>
+        <result property="level" column="level"/>
+        <collection property="subRight" column="id" select="findSubRightByRightId2"/>
+    </resultMap>
+
+
+    <!--    辅助操作-->
+    <select id="findRoleByUserId" parameterType="int" resultMap="role">
+        SELECT r.* FROM users u
+        JOIN users_role ur ON u.`id`=ur.`userId`
+        JOIN role r ON ur.`roleId`=r.`id`
+        WHERE u.`id`= #{id};
+    </select>
+    <select id="findUserByRoleId" parameterType="int" resultType="UserInfo">
+        SELECT u.* FROM users u
+        JOIN `users_role` ur ON ur.`userId`=u.`id`
+        JOIN `role` r ON r.`id`=ur.`roleId`
+        WHERE r.`id`= #{id};
+    </select>
+
+    <!--    获取修改role-right表-->
+    <select id="findRightByRoleId" parameterType="int" resultType="Right" >
+        SELECT DISTINCT(r1.`id`), r1.*  FROM role r
+        JOIN role_right2 rr ON r.`id`=rr.`roleId`
+        JOIN right1 r1 ON rr.`rightId`=r1.`id`
+        WHERE r.`id`=#{id};
+    </select>
+<!--    <select id="findRightByRoleIdmap" parameterType="int" resultMap="right" >-->
+<!--        SELECT DISTINCT(r1.`id`), r1.*  FROM role r-->
+<!--        JOIN role_right2 rr ON r.`id`=rr.`roleId`-->
+<!--        JOIN right1 r1 ON rr.`rightId`=r1.`id`-->
+<!--        WHERE r.`id`=#{id};-->
+<!--    </select>-->
+    <select id="findSubRightByRightId" parameterType="int" resultType="Right">
+        SELECT r2.* FROM right1 r1
+        JOIN role_right2 rr ON r1.`id`=rr.`rightId` AND rr.`roleId`= #{rid}
+        JOIN right2 r2 ON rr.`subrightId`=r2.`id`
+        WHERE r1.`id`=#{id};
+    </select>
+
+    <!--    获取原始role-right表-->
+    <select id="findRightByRoleId2" parameterType="int" resultMap="right2">
+        SELECT r1.* FROM right1 r1
+        JOIN role_right rr ON rr.`rightId`=r1.`id`
+        JOIN role r ON r.`id`=rr.`roleId`
+        WHERE r.`id`=#{id};
+    </select>
+    <select id="findSubRightByRightId2" parameterType="int" resultType="Right">
+        SELECT r2.* FROM right2 r2
+        JOIN rightmap rp ON rp.`level2`= r2.`id`
+        JOIN right1 r1 ON r1.`id`=rp.`level1`
+        WHERE r1.`id`=#{id};
+    </select>
+
+
+    <!--    User查询-->
+    <select id="findUserById" parameterType="int" resultMap="user">
+        select * from users where id = #{id}
+    </select>
+    <select id="findUserByNameAndPassword" parameterType="String" resultMap="user">
+        SELECT * FROM `users` WHERE username = #{name} AND PASSWORD = #{password}
+    </select>
+    <select id="findUserByName" parameterType="String" resultMap="user">
+        SELECT * FROM users where username like #{username}
+    </select>
+    <select id="findAllUser" parameterType="String" resultMap="user">
+        select * from users
+        <where>
+            <if test="isonline != ''">
+                isonline = #{isonline}
+            </if>
+        </where>
+    </select>
+    <update id="updateUser" parameterType="UserInfo">
+        update users set
+            email = #{email},
+            username = #{username},
+            password= #{password},
+            phoneNum= #{phoneNum},
+            status= #{status},
+            isOnline = #{isOnline}
+        where id = #{id}
+    </update>
+    <insert id="addUser" parameterType="UserInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into users (email,username,password,phoneNum,status,isOnline)
+        values (#{email},#{username},#{password},#{phoneNum},#{status},#{isOnline})
+    </insert>
+    <update id="deleteUser" parameterType="int">
+        delete from users where id = #{id}
+    </update>
+    <update id="login" parameterType="String">
+         update users set isonLine = '1' WHERE username = #{username}
+    </update>
+    <update id="logout" parameterType="String">
+         update users set isonLine = '0' WHERE username = #{username}
+    </update>
+    <!--    Role查询-->
+    <select id="findRoleById" resultMap="role3">
+        select * from role where id = #{id}
+    </select>
+    <!--    获取原始role-right表-->
+    <select id="findAllRole" resultMap="role2">
+        select * from role
+    </select>
+    <select id="findAllModRole" resultMap="role3">
+        select * from role
+    </select>
+    <insert id="addRole" parameterType="Role" useGeneratedKeys="true" keyColumn="id">
+        insert into role (roleName,roleDesc) values (#{roleName},#{roleDesc})
+    </insert>
+    <update id="updateRole" parameterType="Role" >
+        update role set roleName = #{roleName},roleDesc = #{roleDesc} where id = #{id}
+    </update>
+    <update id="deleteRole" parameterType="int">
+        delete from role where id = #{id}
+    </update>
+    <!--    Right查询-->
+    <select id="findAllRight" resultMap="right2">
+        select * from right1
+    </select>
+    <insert id="insertRRmap"  parameterType="int">
+        insert into role_right2 (roleId,rightId,subrightId) values(#{id},#{rid},#{sid})
+    </insert>
+    <update id="deleteRoleAllRight" parameterType="int">
+        DELETE FROM role_right2 WHERE roleId=#{rid}
+    </update>
+    <update id="deleteRight" parameterType="int">
+        DELETE FROM role_right2 WHERE roleId=#{rid} AND rightId=#{id}
+    </update>
+    <update id="deleteRight2" parameterType="int">
+        DELETE FROM role_right2 WHERE roleId=#{rid} AND rightId=#{id} AND subrightId=#{sid}
+    </update>
+
+    <!--    关系表操作-->
+    <select id="deleteURmap" parameterType="int">
+        delete from users_role where userId = #{id}
+    </select>
+    <select id="insertURmap" parameterType="int">
+        insert into users_role (userId,roleId) values (#{uid},#{rid})
+    </select>
+<!--    <update id="deleteRPmap" parameterType="int">-->
+<!--        delete from role_right where roleId = #{id}-->
+<!--    </update>-->
+<!--    <select id="insertRPmap" parameterType="int">-->
+<!--        insert into role_right (rightId,roleId) values (#{pid},#{rid})-->
+<!--    </select>-->
+
+    <select id="findRightbuysubRight" parameterType="String" resultType="String">
+        SELECT level1 FROM rightmap WHERE level2 =#{id};
+    </select>
+    <select id="findAllSubrightid" resultType="int">
+       SELECT id FROM `right2`
+    </select>
+
+</mapper>

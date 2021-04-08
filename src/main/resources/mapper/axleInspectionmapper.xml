@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.AxleInspectionDao">
+    <insert id="insertAxleInspection" parameterType="AxleInspection" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO axleInspection
+        (
+            wheelId	,
+            ultAxleLeft	,
+            ultAxleRight,
+            reultAxleLeft,
+            reultAxleRight,
+            ultAxleFootLeft,
+            ultAxleFootRight,
+            ultAxleNeckLeft,
+            ultAxleNeckRight,
+            reultAxleNeckLeft,
+            reultAxleNeckRight,
+            ultisFinish,
+            ultfinishTime	,
+            worker	,
+            reultisFinish	,
+            reultfinishTime	,
+            reultInspector
+        )
+        VALUES
+        (
+            #{	wheelId	},
+            #{	ultAxleLeft	},
+            #{	ultAxleRight	},
+            #{	reultAxleLeft	},
+            #{	reultAxleRight	},
+            #{	ultAxleFootLeft	},
+            #{	ultAxleFootRight	},
+            #{	ultAxleNeckLeft	},
+            #{	ultAxleNeckRight	},
+            #{	reultAxleNeckLeft	},
+            #{	reultAxleNeckRight	},
+            #{	ultisFinish	},
+            #{	ultfinishTime	},
+            #{	worker	},
+            #{	reultisFinish	},
+            #{	reultfinishTime	},
+            #{	reultInspector	}
+        )
+    </insert>
+
+    <insert id="insertMagInspection" parameterType="AxleInspection" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO axleInspection
+        (
+            wheelId	,
+            magAxleBody	,
+            magtAxleNeckLeft	,
+            magAxleNeckRight	,
+            magInspector	,
+            magisFinish	,
+            magfinishTime
+         )
+        VALUES
+        (
+            #{	wheelId	},
+            #{	magAxleBody	},
+            #{	magtAxleNeckLeft	},
+            #{	magAxleNeckRight	},
+            #{	magInspector	},
+            #{	magisFinish	},
+            #{	magfinishTime	}
+        )
+    </insert>
+
+
+
+    <update id="updateAxleInspection" parameterType="AxleInspection">
+        update axleInspection set
+
+                    ultAxleLeft	=	#{	ultAxleLeft	},
+                    ultAxleRight	=	#{	ultAxleRight	},
+                    reultAxleLeft	=	#{	reultAxleLeft	},
+                    reultAxleRight	=	#{	reultAxleRight	},
+                    ultAxleFootLeft	=	#{	ultAxleFootLeft	},
+                    ultAxleFootRight	=	#{	ultAxleFootRight	},
+                    ultAxleNeckLeft	=	#{	ultAxleNeckLeft	},
+                    ultAxleNeckRight	=	#{	ultAxleNeckRight	},
+                    reultAxleNeckLeft	=	#{	reultAxleNeckLeft	},
+                    reultAxleNeckRight	=	#{	reultAxleNeckRight	},
+
+                    ultisFinish	=	#{	ultisFinish	},
+                    ultfinishTime	=	#{	ultfinishTime	},
+                    worker	=	#{	worker	},
+                    reultisFinish	=	#{	reultisFinish	},
+                    reultfinishTime	=	#{	reultfinishTime	},
+                    reultInspector	=	#{	reultInspector	}
+                    where wheelId=#{wheelId}
+    </update>
+
+    <update id="updateMagInspection" parameterType="AxleInspection">
+        update axleInspection set
+                    magAxleBody	=	#{	magAxleBody	},
+                    magtAxleNeckLeft	=	#{	magtAxleNeckLeft	},
+                    magAxleNeckRight	=	#{	magAxleNeckRight	},
+                    magInspector	=	#{	magInspector	},
+                    magisFinish	=	#{	magisFinish	},
+                    magfinishTime	=	#{	magfinishTime	}
+                    where wheelId=#{wheelId}
+    </update>
+
+    <update id="updateReInspection" parameterType="AxleInspection">
+        update axleInspection set
+           reultAxleLeft = #{	reultAxleLeft	},
+           reultAxleRight = #{	reultAxleRight	},
+           reultAxleNeckLeft = #{	reultAxleNeckLeft	},
+           reultAxleNeckRight = #{	reultAxleNeckRight	},
+           reultisFinish = #{	reultisFinish	},
+           reultfinishTime = #{	reultfinishTime	},
+           reultInspector = #{	reultInspector	}
+           where wheelId=#{wheelId}
+    </update>
+
+    <select id="findWheelInfoToAxleInspection" resultType="WheelInfo">
+                SELECT * FROM wheelinfo WHERE isaxleInspectionFinish = '0' and ismagnetInspectionFinish = '1' and isbearingRepairFinish = '1'
+         </select>
+    <select id="findAxleInspectionByWheelId" parameterType="int" resultType="AxleInspection">
+                select * from axleInspection where wheelId = #{wheelId}
+        </select>
+    <update id="deleteAxleInspectionByWheelId" parameterType="int">
+           update axleInspection set
+
+                    ultAxleLeft	=	'',
+                    ultAxleRight	=	'',
+                    reultAxleLeft	=	'',
+                    reultAxleRight	=	'',
+                    ultAxleFootLeft	=	'',
+                    ultAxleFootRight	=	'',
+                    ultAxleNeckLeft	=	'',
+                    ultAxleNeckRight	=	'',
+                    reultAxleNeckLeft	=	'',
+                    reultAxleNeckRight	=	'',
+                    ultisFinish	=	'',
+                    ultfinishTime	=	'',
+                    ultInspector	=	'',
+                    reultisFinish	=	'',
+                    reultfinishTime	=	'',
+                    reultInspector	=	''
+                    where wheelId=#{wheelId}
+    </update>
+
+    <update id="flushWheelInfoAxleInspectionFinish" >
+                UPDATE wheelinfo SET isaxleInspectionFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoAxleInspectionFinish" >
+                UPDATE wheelinfo SET isaxleInspectionFinish = '0' where wheelId = #{wheelId}
+    </update>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM axleInspection WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoByconditionAxleInspection" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+            JOIN axleinspection r ON w.`WheelId` = r.`wheelId`
+        WHERE (w.isaxleInspectionFinish != '-1' and w.ismagnetInspectionFinish = '1' and w.isbearingRepairFinish = '1')
+        <if test="wheelId != ''">
+            AND w.wheelId = #{wheelId}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="axleNumber != ''">
+            AND  w.axleNumber = #{axleNumber}
+        </if>
+        <if test="takeInDateFrom != null ">
+            AND w.infoTakeFinishTime >= #{takeInDateFrom}
+        </if>
+        <if test="takeInDateTo != null ">
+            AND #{takeInDateTo} >= w.infoTakeFinishTime
+        </if>
+        <if test="infoTakeFinishTimeFrom != null ">
+            AND r.ultfinishTime >= #{infoTakeFinishTimeFrom}
+        </if>
+        <if test="infoTakeFinishTimeTo != null ">
+            AND  #{infoTakeFinishTimeTo} >= r.ultfinishTime
+        </if>
+    </select>
+
+
+    <select id="findWheelInfoToMagInspection" resultType="WheelInfo">
+                SELECT * FROM wheelinfo WHERE ismagnetInspectionFinish = '0' and isbearingRepairFinish = '1'
+         </select>
+    <select id="findMagInspectionByWheelId" parameterType="int" resultType="AxleInspection">
+                select * from axleInspection where wheelId = #{wheelId}
+        </select>
+    <update id="deleteMagInspectionByWheelId" parameterType="int">
+                delete FROM axleInspection where wheelId = #{wheelId}
+    </update>
+
+    <update id="flushWheelInfoMagInspectionFinish" >
+                UPDATE wheelinfo SET ismagnetInspectionFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoMagInspectionFinish" >
+                UPDATE wheelinfo SET ismagnetInspectionFinish = '0' where wheelId = #{wheelId}
+    </update>
+
+    <update id="flushWheelInfoReInspectionFinish" >
+                UPDATE wheelinfo SET isreInspectionFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoReInspectionFinish" >
+                UPDATE wheelinfo SET isreInspectionFinish = '0' where wheelId = #{wheelId}
+    </update>
+
+
+    <select id="searchWheelInfoByconditionMagInspection" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+            JOIN axleinspection r ON w.`WheelId` = r.`wheelId`
+        WHERE (w.ismagnetInspectionFinish != '-1' and w.isbearingRepairFinish = '1')
+        <if test="wheelId != ''">
+            AND w.wheelId = #{wheelId}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="axleNumber != ''">
+            AND  w.axleNumber = #{axleNumber}
+        </if>
+        <if test="takeInDateFrom != null ">
+            AND w.infoTakeFinishTime >= #{takeInDateFrom}
+        </if>
+        <if test="takeInDateTo != null ">
+            AND #{takeInDateTo} >= w.infoTakeFinishTime
+        </if>
+        <if test="infoTakeFinishTimeFrom != null ">
+            AND r.magfinishTime >= #{infoTakeFinishTimeFrom}
+        </if>
+        <if test="infoTakeFinishTimeTo != null ">
+            AND  #{infoTakeFinishTimeTo} >= r.magfinishTime
+        </if>
+    </select>
+
+</mapper>

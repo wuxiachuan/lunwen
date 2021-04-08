@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BearingUnLoadDao">
+    <insert id="insertBearingUnLoad" parameterType="BearingUnLoad" >
+        INSERT INTO bearingUnLoad
+        (
+            id,
+            wheelId,
+            bearingPosition,
+            bearingMadeIn,
+            repairProgress,
+            level,
+            bearingAssembleDate,
+            unloadReason,
+            unloadDate
+        )
+        VALUES
+        (
+            #{id},
+            #{wheelId},
+            #{bearingPosition},
+            #{bearingMadeIn},
+            #{repairProgress},
+            #{level},
+            #{bearingAssembleDate},
+            #{unloadReason},
+            #{unloadDate}
+        )
+    </insert>
+
+    <update id="updateBearingUnLoad" parameterType="BearingUnLoad">
+        update bearingUnLoad set
+            wheelId = #{wheelId},
+            bearingPosition = #{bearingPosition},
+            bearingMadeIn = #{bearingMadeIn},
+            repairProgress = #{repairProgress},
+            level = #{level},
+            bearingAssembleDate = #{bearingAssembleDate},
+            unloadReason = #{unloadReason},
+            unloadDate = #{unloadDate}
+        where id = #{id}
+    </update>
+    <select id="findBearingUnLoad" resultType="BearingUnLoad" >
+        SELECT * FROM bearingUnLoad
+    </select>
+    <select id="findBearingUnLoadById" resultType="BearingUnLoad" parameterType="int">
+        SELECT * FROM bearingUnLoad  WHERE wheelId = #{wheelId};
+    </select>
+</mapper>

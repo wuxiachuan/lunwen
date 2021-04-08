@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BlogDao">
+    <insert id="insertBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mobblog
+        (
+            father,
+            publisher,
+            publishTime,
+            content,
+            replyto
+        )
+        VALUES
+        (
+            #{father},
+            #{publisher},
+            #{publishTime},
+            #{content},
+            #{replyto}
+        )
+    </insert>
+    <update id="deleteBlog" parameterType="int">
+        DELETE FROM mobblog WHERE id = #{id}
+    </update>
+    <update id="deleteBlogComment" parameterType="int">
+        DELETE FROM mobblog WHERE father = #{id}
+    </update>
+    <select id="findBlog" parameterType="String" resultType="Blog">
+        select * from mobblog where publisher = #{name} and father = -1 ORDER BY id DESC
+    </select>
+    <select id="findBlogById" parameterType="int" resultType="Blog">
+        select * from mobblog where id = #{id}
+    </select>
+    <select id="findAllBlogs" resultType="Blog">
+        select * from mobblog where father = -1 ORDER BY id DESC
+    </select>
+    <select id="findCommentBlog" resultType="Blog">
+        select * from mobblog where father = #{id} ORDER BY id DESC
+    </select>
+</mapper>

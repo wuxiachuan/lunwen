@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.BearingTestDao">
+    <insert id="insertBearingTest" parameterType="BearingTest" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO rollTest
+        (
+                wheelId	,
+                envTemperatureLeft	,
+                envTemperatureRight	,
+                temperatureRiseLeft	,
+                temperatureRiseRight	,
+                highestTempLeft	,
+                highestTempRight	,
+                worker ,
+                testerRight ,
+                isFinish	,
+                finishTime
+        )
+        VALUES
+        (
+                #{	wheelId	},
+                #{	envTemperatureLeft	},
+                #{	envTemperatureRight	},
+                #{	temperatureRiseLeft	},
+                #{	temperatureRiseRight	},
+                #{	highestTempLeft	},
+                #{	highestTempRight	},
+                #{ worker },
+                #{ testerRight },
+                #{	isFinish	},
+                #{	finishTime	}
+        )
+    </insert>
+    <update id="updateBearingTest" parameterType="BearingTest">
+        update rollTest set
+                envTemperatureLeft	=	#{	envTemperatureLeft	},
+                envTemperatureRight	=	#{	envTemperatureRight	},
+                temperatureRiseLeft	=	#{	temperatureRiseLeft	},
+                temperatureRiseRight	=	#{	temperatureRiseRight	},
+                highestTempLeft	=	#{	highestTempLeft	},
+                highestTempRight	=	#{	highestTempRight	},
+                worker = #{ worker },
+                testerRight = #{ testerRight },
+                isFinish = #{ isFinish	},
+                finishTime =#{ finishTime	}
+                where wheelId	=	#{	wheelId	}
+    </update>
+    <select id="findWheelInfoToBearingTest" resultType="WheelInfo">
+                SELECT * FROM wheelinfo WHERE  isbearingCapFinish != '0'
+                and isbearingRepairFinish = '1'
+                and isaxleInspectionFinish !='0'
+                and isbearingrollTestFinish = '0'
+         </select>
+    <select id="findBearingTestByWheelId" parameterType="int" resultType="BearingTest">
+                select * from rollTest where wheelId = #{wheelId}
+        </select>
+    <update id="deleteBearingTestByWheelId" parameterType="int">
+                delete FROM rollTest where wheelId = #{wheelId}
+    </update>
+
+    <update id="flushWheelInfoRollTestFinish" >
+                UPDATE wheelinfo SET isbearingrollTestFinish = '1' where wheelId = #{wheelId}
+    </update>
+    <update id="rollbackWheelInfoRollTestFinish" >
+                UPDATE wheelinfo SET isbearingrollTestFinish = '0' where wheelId = #{wheelId}
+    </update>
+
+    <select id="findWheelIdCount" parameterType="int" resultType="int">
+        SELECT COUNT(wheelid) FROM rollTest WHERE wheelid  = #{wheelId}
+    </select>
+
+    <select id="searchWheelInfoByconditionTest" parameterType="String" resultType="WheelInfo">
+        SELECT w.* FROM wheelinfo w
+            JOIN rollTest r ON w.`WheelId` = r.`wheelId`
+        WHERE w.isbearingCapFinish != '0'  and w.isbearingRepairFinish = '1'  and w.isaxleInspectionFinish !='0'
+        <if test="wheelId != ''">
+            AND w.wheelId = #{wheelId}
+        </if>
+        <if test="vehicleNumber != ''">
+            AND w.vehicleNumber = #{vehicleNumber}
+        </if>
+        <if test="axleNumber != ''">
+            AND  w.axleNumber = #{axleNumber}
+        </if>
+        <if test="takeInDateFrom != null ">
+            AND w.takeInDate >= #{takeInDateFrom}
+        </if>
+        <if test="takeInDateTo != null ">
+            AND #{takeInDateTo} >= w.takeInDate
+        </if>
+        <if test="infoTakeFinishTimeFrom != null ">
+            AND r.finishTime >= #{infoTakeFinishTimeFrom}
+        </if>
+        <if test="infoTakeFinishTimeTo != null ">
+            AND  #{infoTakeFinishTimeTo} >= r.finishTime
+        </if>
+    </select>
+</mapper>
